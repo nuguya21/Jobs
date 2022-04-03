@@ -35,13 +35,10 @@ class RunnerListener: Listener {
     @EventHandler
     fun onSprint(event: PlayerToggleSprintEvent) {
         val person = PersonManager.getPerson(event.player)
-        val job = person.job
-        if (job != null) {
-            if (job is RunnerJob) {
-                if (event.isSprinting) {
-                    person.player.addPotionEffect(PotionEffect(PotionEffectType.SPEED, 1000000, 3, false, false, false))
-                } else person.player.removePotionEffect(PotionEffectType.SPEED)
-            }
+        if (person.job is RunnerJob) {
+            if (event.isSprinting) {
+                person.player.addPotionEffect(PotionEffect(PotionEffectType.SPEED, 1000000, 3, false, false, false))
+            } else person.player.removePotionEffect(PotionEffectType.SPEED)
         }
     }
 }
