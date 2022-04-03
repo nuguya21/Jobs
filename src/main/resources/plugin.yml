@@ -1,0 +1,6 @@
+name: Jobs
+version: 1.0.0
+main: com.github.nuguya21.jobs.JobsPlugin
+api-version: 1.18
+depend: [ kotlin-stdlib ]
+authors: [ nuguya21 ]
