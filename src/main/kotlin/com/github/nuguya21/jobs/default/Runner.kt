@@ -21,6 +21,7 @@ class Runner(
 
 class RunnerJob: Job {
     override val id: String = "runner"
+    override val description: String = "Run!"
 
     override fun onEnable(jobsPlugin: JobsPlugin) {
         Bukkit.getPluginManager().registerEvents(RunnerListener(), jobsPlugin)

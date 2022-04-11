@@ -6,12 +6,12 @@ class JobManager {
     internal companion object {
 
         private val id: MutableSet<String> = mutableSetOf()
-        private val job: MutableMap<String, Job> = mutableMapOf()
+        private val job: MutableMap<String, Class<Job>> = mutableMapOf()
 
         fun register(job: Job) {
             if (!exists(job)) {
                 this.id.plus(job.id)
-                this.job[job.id] = job
+                this.job[job.id] = job.javaClass
             }
         }
 
@@ -23,10 +23,10 @@ class JobManager {
         }
 
         fun getJob(id: String): Job? {
-            return this.job[id]
+            return this.job[id]?.newInstance()
         }
 
-        fun getJobs(): Set<Job> {
+        fun getJobs(): Set<Class<Job>> {
             return this.job.values.toSet()
         }
 

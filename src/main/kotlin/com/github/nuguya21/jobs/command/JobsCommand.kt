@@ -28,14 +28,20 @@ class JobsCommand : BukkitCommand("jobs") {
                 return true
             }
             if (args.size > 1) {
-                val job: Job? = JobManager.getJob(args[1])
-                if (job != null) {
-                    PersonManager.getPerson(target).job = job
-                    sender.sendMessage("${target.name} 의 직업을 ${job.id} (으)로 변경했습니다")
+                if (args[1] != "none") {
+                    val job: Job? = JobManager.getJob(args[1])
+                    if (job != null) {
+                        PersonManager.getPerson(target).job = job
+                        sender.sendMessage("${target.name} 의 직업을 ${job.id} (으)로 변경했습니다")
+                    }
+                } else {
+                    PersonManager.getPerson(target).job = null
+                    sender.sendMessage("${target.name} 의 직업을 없앴습니다")
                 }
             } else {
-                if (PersonManager.getPerson(target).job == null) sender.sendMessage("${target.name} 의 직업은 없습니다")
-                else sender.sendMessage("${target.name} 의 직업은 없습니다")
+                val job = PersonManager.getPerson(target).job
+                if (job == null) sender.sendMessage("${target.name} 의 직업은 없습니다")
+                else sender.sendMessage("${target.name} 의 직업은 ${job.id} 입니다")
             }
         } catch (e: ArrayIndexOutOfBoundsException) {
             sender.sendMessage("${ChatColor.RED}필요한 요소가 포함되어 있지 않습니다")
@@ -53,8 +59,9 @@ class JobsCommand : BukkitCommand("jobs") {
             }
             2 -> {
                 for (job in JobManager.getJobs()) {
-                    options.add(job.id)
+                    options.add(job.newInstance().id)
                 }
+                options.add("none")
             }
         }
         return options
